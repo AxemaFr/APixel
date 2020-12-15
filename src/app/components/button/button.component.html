@@ -1,0 +1,9 @@
+<div class="ui-button">
+  <button
+    [ngClass]="theme"
+    [class.disabled]="disabled"
+    (click)="emitClick()"
+  >
+    <ng-content></ng-content>
+  </button>
+</div>

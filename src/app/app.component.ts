@@ -1,4 +1,5 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
+import {APixelator, APixelConfig} from '../common/Apixelator';
 
 
 function componentToHex(c: number): any {
@@ -16,20 +17,23 @@ function rgbToHex(r: number, g: number, b: number): any {
   styleUrls: ['./app.component.styl']
 })
 export class AppComponent {
-  @ViewChild('canvasElement') canvas: ElementRef | undefined;
-  title = 'AxemaPixel';
+  @ViewChild('canvasElementFrom') canvasFrom: ElementRef | undefined;
+  @ViewChild('canvasElementTo') canvasTo: ElementRef | undefined;
+  title = 'APixel';
 
   public handleChange(e: any): void {
     const reader = new FileReader();
     reader.onload = (event) => {
       const img = new Image();
       img.onload = () => {
-        if (!this.canvas) {
+        if (!this.canvasFrom || !this.canvasTo) {
           return;
         }
-        this.canvas.nativeElement.width = img.width;
-        this.canvas.nativeElement.height = img.height;
-        const ctx = this.canvas.nativeElement.getContext('2d');
+        this.canvasFrom.nativeElement.width = img.width;
+        this.canvasFrom.nativeElement.height = img.height;
+        this.canvasTo.nativeElement.width = img.width;
+        this.canvasTo.nativeElement.height = img.height;
+        const ctx = this.canvasFrom.nativeElement.getContext('2d');
         ctx.drawImage(img, 0, 0);
       };
 
@@ -42,56 +46,14 @@ export class AppComponent {
   }
 
   public goTest(): void {
-    if (!this.canvas) {
-      return;
-    }
-    const ctx = this.canvas.nativeElement.getContext('2d');
-    const canvas = this.canvas.nativeElement;
+    const config: APixelConfig = {
+      to: this.canvasTo?.nativeElement as HTMLCanvasElement,
+      from: this.canvasFrom?.nativeElement as HTMLCanvasElement,
+      resultPixelSize: 24,
+    };
 
-    const bigPixelSize = 8;
+    const pixelator = new APixelator(config);
 
-    let sx = 0;
-    let sy = 0;
-
-    do {
-      const pixelData = ctx.getImageData(sx, sy, bigPixelSize, bigPixelSize);
-
-      const pixels = [];
-      for (let i = 0; i < (bigPixelSize ** 2) * 4; i += 4) {
-        const pixel = {
-          r: pixelData.data[i],
-          g: pixelData.data[i + 1],
-          b: pixelData.data[i + 2],
-        };
-
-        pixels.push(pixel);
-      }
-
-      const resultColor = {
-        r: 0,
-        g: 0,
-        b: 0,
-      };
-
-      pixels.forEach((pixel) => {
-        resultColor.g += pixel.g;
-        resultColor.r += pixel.r;
-        resultColor.b += pixel.b;
-      });
-
-      resultColor.g /= pixels.length;
-      resultColor.r /= pixels.length;
-      resultColor.b /= pixels.length;
-
-      ctx.fillStyle = rgbToHex(Math.floor(resultColor.r), Math.floor(resultColor.g), Math.floor(resultColor.b));
-      ctx.fillRect(sx, sy, bigPixelSize, bigPixelSize);
-
-      sx += bigPixelSize;
-
-      if (sx >= canvas.width) {
-        sx = 0;
-        sy += bigPixelSize;
-      }
-    } while (sy < canvas.height);
+    pixelator.convertImage();
   }
 }

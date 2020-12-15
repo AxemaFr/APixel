@@ -1,0 +1,67 @@
+@import "../../lib/styles/core.styl"
+
+.ui-button
+  button
+    width 100%
+    font-family IBM Plex Sans
+    font-style normal
+    font-weight 500
+    border none
+    display flex
+    justify-content center
+    align-items center
+    outline none
+
+    &.primary
+      background $colorBlue
+      color $colorWhite
+
+      &:active
+        background $colorBlueDark
+
+      &.disabled
+        background $colorGrayLight
+        color $colorWhite
+        pointer-events none
+
+    &.secondary
+      background $colorBlueLight
+      color $colorBlue
+
+      &:active
+        background $colorBlueMedium
+
+      &.disabled
+        color $colorGrayLightest
+        pointer-events none
+
+    &.alert
+      background $colorRed
+      color $colorWhite
+
+      &:active
+        background $colorRedDark
+
+      &.disabled
+        color $colorGrayLightest
+        pointer-events none
+
+  &_lg
+    button
+      font-size: $step4
+      line-height: $step6
+      height: $step * 14
+      border-radius: $step * 2.5
+      letter-spacing: 0
+      margin: $step2 0
+
+  &_sm
+    button
+      font-size: $step2 + 1
+      line-height: $step3
+      height: $step8
+      border-radius: $step2
+      letter-spacing: 0.02em
+      margin: 0
+
+
