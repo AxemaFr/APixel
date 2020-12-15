@@ -52,8 +52,6 @@ export class APixelator {
       pixels.push(pixel);
     }
 
-    console.log(pixels.length);
-
     const resultColor = {
       r: 0,
       g: 0,

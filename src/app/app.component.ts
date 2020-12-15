@@ -1,16 +1,6 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
 import {APixelator, APixelConfig} from '../common/Apixelator';
 
-
-function componentToHex(c: number): any {
-  const hex = c.toString(16);
-  return hex.length === 1 ? '0' + hex : hex;
-}
-
-function rgbToHex(r: number, g: number, b: number): any {
-  return '#' + componentToHex(r) + componentToHex(g) + componentToHex(b);
-}
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
