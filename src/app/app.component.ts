@@ -29,19 +29,7 @@ export class AppComponent implements AfterViewInit {
   @ViewChild('canvasElementFrom') canvasFrom: ElementRef | undefined;
   @ViewChild('canvasElementTo') canvasTo: ElementRef | undefined;
   title = 'APixel';
-  config: APixelConfig;
-
-  constructor() {
-    this.config = {
-      to: this.canvasTo?.nativeElement as HTMLCanvasElement,
-      from: this.canvasFrom?.nativeElement as HTMLCanvasElement,
-      resultPixelSize: 12,
-      palette: minecraftPalette,
-      scale: 0.8,
-      isSpaced: true,
-      isGrayScale: true,
-    };
-  }
+  config: APixelConfig | undefined;
 
   ngAfterViewInit(): void {
     this.config = {
@@ -86,6 +74,10 @@ export class AppComponent implements AfterViewInit {
   }
 
   public setScale(): void {
+    if (!this.config) {
+      return;
+    }
+
     this.config.scale = 1;
   }
 }
