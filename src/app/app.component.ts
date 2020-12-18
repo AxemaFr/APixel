@@ -58,8 +58,9 @@ export class AppComponent {
     const config: APixelConfig = {
       to: this.canvasTo?.nativeElement as HTMLCanvasElement,
       from: this.canvasFrom?.nativeElement as HTMLCanvasElement,
-      resultPixelSize: 8,
-      palette: minecraftPalette,
+      resultPixelSize: 20,
+      palette: [],
+      scale: 0.5,
     };
 
     const pixelator = new APixelator(config);

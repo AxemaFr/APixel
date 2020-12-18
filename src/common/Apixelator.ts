@@ -3,8 +3,7 @@ export type APixelConfig = {
   from: HTMLCanvasElement,
   resultPixelSize: number
   palette: Color[],
-  // maxHeight: number,
-  // maxWidth: number,
+  scale: number
 };
 
 export type Pixel = [number, number, number];
@@ -19,6 +18,7 @@ export class APixelator {
     this.toCtx = this.drawTo.getContext('2d') as CanvasRenderingContext2D;
     this.resultPixelSize = config.resultPixelSize;
     this.palette = config.palette;
+    this.scale = config.scale;
   }
   private drawFrom: HTMLCanvasElement;
   private drawTo: HTMLCanvasElement;
@@ -26,6 +26,7 @@ export class APixelator {
   private toCtx: CanvasRenderingContext2D;
   private resultPixelSize: number;
   private palette: Color[];
+  private scale: number;
 
   public hideFromCanvas(): APixelator {
     this.drawFrom.style.visibility = 'hidden';
@@ -35,11 +36,11 @@ export class APixelator {
     return this;
   }
 
-  public getResultPixelColor(sx: number, sy: number): Color {
-    const pixelData = this.fromCtx.getImageData(sx, sy, this.resultPixelSize, this.resultPixelSize);
+  public getResultPixelColor(sx: number, sy: number, areaSize: number): Color {
+    const pixelData = this.fromCtx.getImageData(sx, sy, areaSize, areaSize);
 
     const pixels = [];
-    for (let sxl = 0; sxl < this.resultPixelSize * this.resultPixelSize * 4; sxl += 4) {
+    for (let sxl = 0; sxl < areaSize ** 2 * 4; sxl += 4) {
       if (this.drawFrom.width - sx <= sxl + 2 || this.drawFrom.height - sy <= sxl + 2) {
         continue;
       }
@@ -75,15 +76,19 @@ export class APixelator {
   }
 
   public convertImage(): void {
-    this.drawTo.height = this.drawFrom.height;
-    this.drawTo.width = this.drawFrom.width;
+    // TODO: if we dont set height, width, sx, sy depending on scale then we will have beautiful picture
+    this.drawTo.height = this.drawFrom.height * this.scale;
+    this.drawTo.width = this.drawFrom.width * this.scale;
 
     for (let sx = 0; sx <= this.drawFrom.width; sx += this.resultPixelSize) {
       for (let sy = 0; sy <= this.drawFrom.height; sy += this.resultPixelSize) {
-        const fillColor: Color = this.getResultPixelColor(sx, sy);
-        const [r, g, b] = this.getSimilarPaletteColor(fillColor);
+        let [r, g, b] = this.getResultPixelColor(sx, sy, this.resultPixelSize);
+        if (this.palette.length > 0) {
+          [r, g, b] = this.getSimilarPaletteColor([r, g, b]);
+        }
         this.toCtx.fillStyle = `rgb(${r}, ${g}, ${b})`;
-        this.toCtx.fillRect(sx, sy, this.resultPixelSize, this.resultPixelSize);
+        // TODO: if we dont set height, width, sx, sy depending on scale then we will have beautiful picture
+        this.toCtx.fillRect(sx * this.scale, sy * this.scale, this.resultPixelSize * this.scale, this.resultPixelSize * this.scale);
       }
     }
   }
