@@ -47,11 +47,11 @@ export class AppComponent implements AfterViewInit {
     this.config = {
       to: this.canvasTo?.nativeElement as HTMLCanvasElement,
       from: this.canvasFrom?.nativeElement as HTMLCanvasElement,
-      resultPixelSize: 12,
-      palette: minecraftPalette,
+      resultPixelSize: 8,
+      palette: [],
       scale: 0.7,
       isSpaced: true,
-      isGrayScale: true,
+      isGrayScale: false,
     };
   }
 

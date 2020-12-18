@@ -5,7 +5,7 @@ export type APixelConfig = {
   palette: Color[],
   scale: number,
   isSpaced: boolean,
-  isGrayScale: true,
+  isGrayScale: boolean,
 };
 
 export type Pixel = [number, number, number];
@@ -149,8 +149,8 @@ export class APixelator {
     const w = this.config.to.width;
     const h = this.config.to.height;
     const imgPixels = this.toCtx.getImageData(0, 0, w, h);
-    for (let y = 0; y < imgPixels.height; y++) {
-      for (let x = 0; x < imgPixels.width; x++) {
+    for (let x = 0; x < imgPixels.width; x++) {
+      for (let y = 0; x < imgPixels.height; y++) {
         const i = y * 4 * imgPixels.width + x * 4;
         const avg = (imgPixels.data[i] + imgPixels.data[i + 1] + imgPixels.data[i + 2]) / 3;
         imgPixels.data[i] = avg;
