@@ -2,7 +2,7 @@
   <button
     [ngClass]="theme"
     [class.disabled]="disabled"
-    (click)="emitClick()"
+    (click)="emitClick($event)"
   >
     <ng-content></ng-content>
   </button>

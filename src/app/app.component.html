@@ -1,7 +1,8 @@
 <header>
 
   <input type="file" alt="image" (change)="handleChange($event)">
-  <button (click)="goTest()">Получить пиксели</button>
+  <app-button (click)="goTest()">Получить пиксели</app-button>
+  <app-button (click)="setScale()">Изменить скейл</app-button>
   <canvas #canvasElementFrom></canvas>
   <canvas #canvasElementTo></canvas>
 </header>

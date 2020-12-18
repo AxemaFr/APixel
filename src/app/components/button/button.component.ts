@@ -12,26 +12,30 @@ export enum ButtonSize {
 }
 
 @Component({
-  selector: 'ui-button',
+  selector: 'app-button',
   templateUrl: './button.component.html',
   styleUrls: ['./button.component.styl'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ButtonComponent {
   @Input() theme = ButtonThemes.primary;
-  @Input() disabled: boolean;
+  @Input() disabled = false;
   @Input() buttonSize: ButtonSize = ButtonSize.lg;
-  @Input() index: number;
+  @Input() index = 0;
 
   constructor(private cdr: ChangeDetectorRef) {}
 
   public readonly click: EventEmitter<void> = new EventEmitter();
 
-  emitClick() {
+  public emitClick(event: Event): void {
+    if (this.disabled) {
+      return;
+    }
+
     this.click.emit();
   }
 
-  setTheme(theme: ButtonThemes) {
+  public setTheme(theme: ButtonThemes): void {
     this.theme = theme;
     this.cdr.detectChanges();
   }

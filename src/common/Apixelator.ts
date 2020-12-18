@@ -3,7 +3,9 @@ export type APixelConfig = {
   from: HTMLCanvasElement,
   resultPixelSize: number
   palette: Color[],
-  scale: number
+  scale: number,
+  isSpaced: boolean,
+  isGrayScale: true,
 };
 
 export type Pixel = [number, number, number];
@@ -12,27 +14,19 @@ export type Color = [number, number, number];
 export class APixelator {
 
   constructor(config: APixelConfig) {
-    this.drawFrom = config.from;
-    this.drawTo = config.to;
-    this.fromCtx = this.drawFrom.getContext('2d') as CanvasRenderingContext2D;
-    this.toCtx = this.drawTo.getContext('2d') as CanvasRenderingContext2D;
-    this.resultPixelSize = config.resultPixelSize;
-    this.palette = config.palette;
-    this.scale = config.scale;
+    this.config = config;
+    this.fromCtx = config.from.getContext('2d') as CanvasRenderingContext2D;
+    this.toCtx = config.to.getContext('2d') as CanvasRenderingContext2D;
   }
-  private drawFrom: HTMLCanvasElement;
-  private drawTo: HTMLCanvasElement;
+  private config: APixelConfig;
   private fromCtx: CanvasRenderingContext2D;
   private toCtx: CanvasRenderingContext2D;
-  private resultPixelSize: number;
-  private palette: Color[];
-  private scale: number;
 
   public hideFromCanvas(): APixelator {
-    this.drawFrom.style.visibility = 'hidden';
-    this.drawFrom.style.position = 'fixed';
-    this.drawFrom.style.top = '0';
-    this.drawFrom.style.left = '0';
+    this.config.from.style.visibility = 'hidden';
+    this.config.from.style.position = 'fixed';
+    this.config.from.style.top = '0';
+    this.config.from.style.left = '0';
     return this;
   }
 
@@ -41,7 +35,7 @@ export class APixelator {
 
     const pixels = [];
     for (let sxl = 0; sxl < areaSize ** 2 * 4; sxl += 4) {
-      if (this.drawFrom.width - sx <= sxl + 2 || this.drawFrom.height - sy <= sxl + 2) {
+      if (this.config.from.width - sx <= sxl + 2 || this.config.from.height - sy <= sxl + 2) {
         continue;
       }
 
@@ -76,20 +70,21 @@ export class APixelator {
   }
 
   public convertImage(): void {
-    // TODO: if we dont set height, width, sx, sy depending on scale then we will have beautiful picture
-    this.drawTo.height = this.drawFrom.height * this.scale;
-    this.drawTo.width = this.drawFrom.width * this.scale;
+    this.hideFromCanvas();
+    this.updateToCanvasSize();
 
-    for (let sx = 0; sx <= this.drawFrom.width; sx += this.resultPixelSize) {
-      for (let sy = 0; sy <= this.drawFrom.height; sy += this.resultPixelSize) {
-        let [r, g, b] = this.getResultPixelColor(sx, sy, this.resultPixelSize);
-        if (this.palette.length > 0) {
-          [r, g, b] = this.getSimilarPaletteColor([r, g, b]);
+    for (let sx = 0; sx <= this.config.from.width; sx += this.config.resultPixelSize) {
+      for (let sy = 0; sy <= this.config.from.height; sy += this.config.resultPixelSize) {
+        let color = this.getResultPixelColor(sx, sy, this.config.resultPixelSize);
+        if (this.config.palette.length > 0) {
+          color = this.getSimilarPaletteColor(color);
         }
-        this.toCtx.fillStyle = `rgb(${r}, ${g}, ${b})`;
-        // TODO: if we dont set height, width, sx, sy depending on scale then we will have beautiful picture
-        this.toCtx.fillRect(sx * this.scale, sy * this.scale, this.resultPixelSize * this.scale, this.resultPixelSize * this.scale);
+        this.fillToCanvasRect(sx, sy, color);
       }
+    }
+
+    if (this.config.isGrayScale) {
+      this.convertToGrayscale();
     }
   }
 
@@ -102,10 +97,10 @@ export class APixelator {
   }
 
   public getSimilarPaletteColor(color: Color): Color {
-    let currentColor = this.palette[0];
-    let currentSim = this.colorSim(color, this.palette[0]);
+    let currentColor = this.config.palette[0];
+    let currentSim = this.colorSim(color, this.config.palette[0]);
 
-    this.palette.forEach((pColor: Color) => {
+    this.config.palette.forEach((pColor: Color) => {
       const sim = this.colorSim(color, pColor);
       if (sim < currentSim) {
         currentColor = pColor;
@@ -116,4 +111,53 @@ export class APixelator {
     return currentColor;
   }
 
+  private updateToCanvasSize(): void {
+    if (this.config.isSpaced) {
+      this.config.to.height = this.config.from.height;
+      this.config.to.width = this.config.from.width;
+
+      return;
+    }
+
+    this.config.to.height = this.config.from.height * this.config.scale;
+    this.config.to.width = this.config.from.width * this.config.scale;
+  }
+
+  private fillToCanvasRect(sx: number, sy: number, color: Color): void {
+    const [r, g, b] = color;
+    this.toCtx.fillStyle = `rgb(${r}, ${g}, ${b})`;
+    if (this.config.isSpaced) {
+      this.toCtx.fillRect(
+        sx,
+        sy,
+        this.config.resultPixelSize * this.config.scale,
+        this.config.resultPixelSize * this.config.scale
+      );
+
+      return;
+    }
+
+    this.toCtx.fillRect(
+      sx * this.config.scale,
+      sy * this.config.scale,
+      this.config.resultPixelSize * this.config.scale,
+      this.config.resultPixelSize * this.config.scale
+    );
+  }
+
+  private convertToGrayscale(): void {
+    const w = this.config.to.width;
+    const h = this.config.to.height;
+    const imgPixels = this.toCtx.getImageData(0, 0, w, h);
+    for (let y = 0; y < imgPixels.height; y++) {
+      for (let x = 0; x < imgPixels.width; x++) {
+        const i = y * 4 * imgPixels.width + x * 4;
+        const avg = (imgPixels.data[i] + imgPixels.data[i + 1] + imgPixels.data[i + 2]) / 3;
+        imgPixels.data[i] = avg;
+        imgPixels.data[i + 1] = avg;
+        imgPixels.data[i + 2] = avg;
+      }
+    }
+    this.toCtx.putImageData(imgPixels, 0, 0, 0, 0, imgPixels.width, imgPixels.height);
+  }
 }

@@ -1,4 +1,4 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
 import {APixelator, APixelConfig, Color} from '../common/Apixelator';
 
 const minecraftPalette: Color[] = [
@@ -25,10 +25,35 @@ const minecraftPalette: Color[] = [
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.styl']
 })
-export class AppComponent {
+export class AppComponent implements AfterViewInit {
   @ViewChild('canvasElementFrom') canvasFrom: ElementRef | undefined;
   @ViewChild('canvasElementTo') canvasTo: ElementRef | undefined;
   title = 'APixel';
+  config: APixelConfig;
+
+  constructor() {
+    this.config = {
+      to: this.canvasTo?.nativeElement as HTMLCanvasElement,
+      from: this.canvasFrom?.nativeElement as HTMLCanvasElement,
+      resultPixelSize: 12,
+      palette: minecraftPalette,
+      scale: 0.8,
+      isSpaced: true,
+      isGrayScale: true,
+    };
+  }
+
+  ngAfterViewInit(): void {
+    this.config = {
+      to: this.canvasTo?.nativeElement as HTMLCanvasElement,
+      from: this.canvasFrom?.nativeElement as HTMLCanvasElement,
+      resultPixelSize: 12,
+      palette: minecraftPalette,
+      scale: 0.7,
+      isSpaced: true,
+      isGrayScale: true,
+    };
+  }
 
   public handleChange(e: any): void {
     const reader = new FileReader();
@@ -55,16 +80,12 @@ export class AppComponent {
   }
 
   public goTest(): void {
-    const config: APixelConfig = {
-      to: this.canvasTo?.nativeElement as HTMLCanvasElement,
-      from: this.canvasFrom?.nativeElement as HTMLCanvasElement,
-      resultPixelSize: 20,
-      palette: [],
-      scale: 0.5,
-    };
-
-    const pixelator = new APixelator(config);
+    const pixelator = new APixelator(this.config as APixelConfig);
 
     pixelator.convertImage();
+  }
+
+  public setScale(): void {
+    this.config.scale = 1;
   }
 }
