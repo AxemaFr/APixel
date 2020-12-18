@@ -2,7 +2,7 @@ export type APixelConfig = {
   to: HTMLCanvasElement,
   from: HTMLCanvasElement,
   resultPixelSize: number
-  // palette: Color[],
+  palette: Color[],
   // maxHeight: number,
   // maxWidth: number,
 };
@@ -18,12 +18,14 @@ export class APixelator {
     this.fromCtx = this.drawFrom.getContext('2d') as CanvasRenderingContext2D;
     this.toCtx = this.drawTo.getContext('2d') as CanvasRenderingContext2D;
     this.resultPixelSize = config.resultPixelSize;
+    this.palette = config.palette;
   }
   private drawFrom: HTMLCanvasElement;
   private drawTo: HTMLCanvasElement;
   private fromCtx: CanvasRenderingContext2D;
   private toCtx: CanvasRenderingContext2D;
   private resultPixelSize: number;
+  private palette: Color[];
 
   public hideFromCanvas(): APixelator {
     this.drawFrom.style.visibility = 'hidden';
@@ -78,12 +80,35 @@ export class APixelator {
 
     for (let sx = 0; sx <= this.drawFrom.width; sx += this.resultPixelSize) {
       for (let sy = 0; sy <= this.drawFrom.height; sy += this.resultPixelSize) {
-        const [r, g, b]: Color = this.getResultPixelColor(sx, sy);
-
+        const fillColor: Color = this.getResultPixelColor(sx, sy);
+        const [r, g, b] = this.getSimilarPaletteColor(fillColor);
         this.toCtx.fillStyle = `rgb(${r}, ${g}, ${b})`;
         this.toCtx.fillRect(sx, sy, this.resultPixelSize, this.resultPixelSize);
       }
     }
+  }
+
+  public colorSim(color: Color, compareColor: Color): number {
+    let d = 0;
+    for (let i = 0; i < color.length; i++) {
+      d += (color[i] - compareColor[i]) ** 2;
+    }
+    return Math.sqrt(d);
+  }
+
+  public getSimilarPaletteColor(color: Color): Color {
+    let currentColor = this.palette[0];
+    let currentSim = this.colorSim(color, this.palette[0]);
+
+    this.palette.forEach((pColor: Color) => {
+      const sim = this.colorSim(color, pColor);
+      if (sim < currentSim) {
+        currentColor = pColor;
+        currentSim = sim;
+      }
+    });
+
+    return currentColor;
   }
 
 }
