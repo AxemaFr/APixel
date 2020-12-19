@@ -1,9 +1,17 @@
 <header>
   <input type="file" alt="image" (change)="handleChange($event)">
   <app-button (click)="goTest()">Конвертировать</app-button>
-  <app-button (click)="setScale()">Изменить скейл</app-button>
   <app-checkbox [(value)]="isGrayScale">Grayscale</app-checkbox>
   <app-checkbox [(value)]="isSpaced">Spaced</app-checkbox>
+  <app-checkbox [(value)]="minecraft">minecraft on</app-checkbox>
+  <div style="display: flex; font-size: 18px; align-items: center; justify-content: space-between; width: 180px">
+    Scale
+    <app-incrementer [(value)]="this.scale" [step]="0.1" [maxValue]="1" [minValue]="0.1"></app-incrementer>
+  </div>
+  <div style="display: flex; font-size: 18px; align-items: center; justify-content: space-between; width: 180px">
+    resultPixel
+    <app-incrementer [(value)]="this.resultPixelSize" [step]="2" [maxValue]="40" [minValue]="4"></app-incrementer>
+  </div>
   <canvas #canvasElementFrom></canvas>
   <canvas #canvasElementTo></canvas>
 </header>

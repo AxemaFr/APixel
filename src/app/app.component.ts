@@ -34,6 +34,8 @@ export class AppComponent {
   public isGrayScale = false;
   public isSpaced = false;
   public scale = 0.5;
+  public resultPixelSize = 8;
+  public minecraft: false;
 
   public handleChange(e: any): void {
     const reader = new FileReader();
@@ -61,8 +63,8 @@ export class AppComponent {
     const config = {
       to: this.canvasTo?.nativeElement as HTMLCanvasElement,
       from: this.canvasFrom?.nativeElement as HTMLCanvasElement,
-      resultPixelSize: 8,
-      palette: [],
+      resultPixelSize: this.resultPixelSize,
+      palette: this.minecraft ? minecraftPalette : [],
       scale: this.scale,
       isSpaced: this.isSpaced,
       isGrayScale: this.isGrayScale,
