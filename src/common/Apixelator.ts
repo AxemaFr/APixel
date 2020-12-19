@@ -1,3 +1,9 @@
+ /**
+  * APixel - convert an image to Pixel Art, with/out grayscale and based on a color palette with some improvment options
+  * @author Artem Myazitov @ <https://github.com/AxemaFr/APixel>
+  */
+
+
 export type APixelConfig = {
   to: HTMLCanvasElement,
   from: HTMLCanvasElement,
@@ -119,8 +125,8 @@ export class APixelator {
       return;
     }
 
-    this.config.to.height = Math.round(this.config.from.height * this.config.scale);
-    this.config.to.width = Math.round(this.config.from.width * this.config.scale);
+    this.config.to.height = Math.floor(this.config.from.height * this.config.scale);
+    this.config.to.width = Math.floor(this.config.from.width * this.config.scale);
   }
 
   private fillToCanvasRect(sx: number, sy: number, color: Color): void {
@@ -130,8 +136,8 @@ export class APixelator {
       this.toCtx.fillRect(
         sx,
         sy,
-        this.config.resultPixelSize * this.config.scale,
-        this.config.resultPixelSize * this.config.scale
+        Math.ceil(this.config.resultPixelSize * this.config.scale),
+        Math.ceil(this.config.resultPixelSize * this.config.scale)
       );
 
       return;
@@ -140,8 +146,8 @@ export class APixelator {
     this.toCtx.fillRect(
       Math.round(sx * this.config.scale),
       Math.round(sy * this.config.scale),
-      Math.round(this.config.resultPixelSize * this.config.scale),
-      Math.round(this.config.resultPixelSize * this.config.scale),
+      Math.ceil(this.config.resultPixelSize * this.config.scale),
+      Math.ceil(this.config.resultPixelSize * this.config.scale),
     );
   }
 
