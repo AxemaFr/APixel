@@ -63,9 +63,9 @@ export class APixelator {
     });
 
     return [
-      Math.floor(resultColor.r / pixels.length),
-      Math.floor(resultColor.g / pixels.length),
-      Math.floor(resultColor.b / pixels.length),
+      Math.round(resultColor.r / pixels.length),
+      Math.round(resultColor.g / pixels.length),
+      Math.round(resultColor.b / pixels.length),
     ];
   }
 
@@ -119,8 +119,8 @@ export class APixelator {
       return;
     }
 
-    this.config.to.height = this.config.from.height * this.config.scale;
-    this.config.to.width = this.config.from.width * this.config.scale;
+    this.config.to.height = Math.round(this.config.from.height * this.config.scale);
+    this.config.to.width = Math.round(this.config.from.width * this.config.scale);
   }
 
   private fillToCanvasRect(sx: number, sy: number, color: Color): void {
@@ -138,10 +138,10 @@ export class APixelator {
     }
 
     this.toCtx.fillRect(
-      sx * this.config.scale,
-      sy * this.config.scale,
-      this.config.resultPixelSize * this.config.scale,
-      this.config.resultPixelSize * this.config.scale
+      Math.round(sx * this.config.scale),
+      Math.round(sy * this.config.scale),
+      Math.round(this.config.resultPixelSize * this.config.scale),
+      Math.round(this.config.resultPixelSize * this.config.scale),
     );
   }
 
@@ -150,7 +150,7 @@ export class APixelator {
     const h = this.config.to.height;
     const imgPixels = this.toCtx.getImageData(0, 0, w, h);
     for (let x = 0; x < imgPixels.width; x++) {
-      for (let y = 0; x < imgPixels.height; y++) {
+      for (let y = 0; y < imgPixels.height; y++) {
         const i = y * 4 * imgPixels.width + x * 4;
         const avg = (imgPixels.data[i] + imgPixels.data[i + 1] + imgPixels.data[i + 2]) / 3;
         imgPixels.data[i] = avg;

@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
+import {AfterContentInit, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, ViewChild} from '@angular/core';
 import {APixelator, APixelConfig, Color} from '../common/Apixelator';
 
 const minecraftPalette: Color[] = [
@@ -23,25 +23,17 @@ const minecraftPalette: Color[] = [
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.styl']
+  styleUrls: ['./app.component.styl'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppComponent implements AfterViewInit {
+export class AppComponent {
   @ViewChild('canvasElementFrom') canvasFrom: ElementRef | undefined;
   @ViewChild('canvasElementTo') canvasTo: ElementRef | undefined;
   title = 'APixel';
-  config: APixelConfig | undefined;
 
-  ngAfterViewInit(): void {
-    this.config = {
-      to: this.canvasTo?.nativeElement as HTMLCanvasElement,
-      from: this.canvasFrom?.nativeElement as HTMLCanvasElement,
-      resultPixelSize: 8,
-      palette: [],
-      scale: 0.7,
-      isSpaced: true,
-      isGrayScale: false,
-    };
-  }
+  public isGrayScale = false;
+  public isSpaced = false;
+  public scale = 0.5;
 
   public handleChange(e: any): void {
     const reader = new FileReader();
@@ -53,8 +45,6 @@ export class AppComponent implements AfterViewInit {
         }
         this.canvasFrom.nativeElement.width = img.width;
         this.canvasFrom.nativeElement.height = img.height;
-        this.canvasTo.nativeElement.width = img.width;
-        this.canvasTo.nativeElement.height = img.height;
         const ctx = this.canvasFrom.nativeElement.getContext('2d');
         ctx.drawImage(img, 0, 0);
       };
@@ -68,16 +58,22 @@ export class AppComponent implements AfterViewInit {
   }
 
   public goTest(): void {
-    const pixelator = new APixelator(this.config as APixelConfig);
+    const config = {
+      to: this.canvasTo?.nativeElement as HTMLCanvasElement,
+      from: this.canvasFrom?.nativeElement as HTMLCanvasElement,
+      resultPixelSize: 8,
+      palette: [],
+      scale: this.scale,
+      isSpaced: this.isSpaced,
+      isGrayScale: this.isGrayScale,
+    };
+
+    const pixelator = new APixelator(config);
 
     pixelator.convertImage();
   }
 
   public setScale(): void {
-    if (!this.config) {
-      return;
-    }
-
-    this.config.scale = 1;
+    this.scale = 0.2;
   }
 }

@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import {ButtonModule} from './components/button/button.module';
+import {CheckboxModule} from './components/checkbox/checkbox.module';
 
 @NgModule({
   declarations: [
@@ -10,7 +11,8 @@ import {ButtonModule} from './components/button/button.module';
   ],
     imports: [
         BrowserModule,
-        ButtonModule
+        ButtonModule,
+        CheckboxModule
     ],
   providers: [],
   bootstrap: [AppComponent]
