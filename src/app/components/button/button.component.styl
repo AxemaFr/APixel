@@ -1,7 +1,8 @@
 .ui-button
+  position: relative
+  bottom: 1px
   button
     display: flex
-    min-width: 40px
     font-family IBM Plex Sans
     font-style normal
     font-weight 500
@@ -9,18 +10,20 @@
     justify-content center
     align-items center
     outline none
-    border-radius: 10px;
-    font-size: 16px
-    height: 32px
+    font-size: 30px
+    height: 25px
+    width: 25px
+    padding: 3px;
+    margin: 0;
 
     &.primary
-      background #42B6FB
-      color #FFFFFF
+      background #DFDFDF
 
       &:active
-        background #3BA4E2
+        background #222321
+        svg
+          fill: white
 
       &.disabled
-        background #DFDFDF
-        color #FFFFFF
+        background #222321
         pointer-events none
