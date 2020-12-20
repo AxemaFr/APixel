@@ -4,33 +4,25 @@
   <app-checkbox [(value)]="isGrayScale" (valueChange)="goTest()">Grayscale</app-checkbox>
   <app-checkbox [(value)]="isSpaced" (valueChange)="goTest()">Spaced</app-checkbox>
   <app-checkbox [(value)]="minecraft" (valueChange)="goTest()">minecraft on</app-checkbox>
-  <div>
-    <div class="incrementer-block">
-      <div class="incrementer-block__content">
-        <p class="incrementer-block__text">Scale</p>
-        <app-incrementer
-          [(value)]="this.scale"
-          [step]="0.1"
-          [maxValue]="1"
-          [minValue]="0.1"
-          (valueChange)="goTest()"
-        ></app-incrementer>
-      </div>
-    </div>
+  <div class="incrementer-block">
+    <app-incrementer
+      [(value)]="this.scale"
+      [textLabel]='"Scale"'
+      [step]="0.1"
+      [maxValue]="1"
+      [minValue]="0.1"
+      (valueChange)="goTest()"
+    ></app-incrementer>
   </div>
-  <div>
-    <div class="incrementer-block">
-      <div class="incrementer-block__content">
-        <p class="incrementer-block__text">resultPixel</p>
-        <app-incrementer
-          [(value)]="this.resultPixelSize"
-          [step]="2"
-          [maxValue]="40"
-          [minValue]="4"
-          (valueChange)="goTest()"
-        ></app-incrementer>
-      </div>
-    </div>
+  <div class="incrementer-block">
+    <app-incrementer
+      [(value)]="this.resultPixelSize"
+      [textLabel]='"resultPixel"'
+      [step]="2"
+      [maxValue]="40"
+      [minValue]="4"
+      (valueChange)="goTest()"
+    ></app-incrementer>
   </div>
   <canvas #canvasElementFrom></canvas>
   <canvas #canvasElementTo></canvas>

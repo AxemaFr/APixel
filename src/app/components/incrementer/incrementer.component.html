@@ -1,11 +1,12 @@
 <div class="ui-incrementer">
-  <app-button (click)="desc()">
-    <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="22.354px" height="22.354px" viewBox="0 0 22.354 22.354" style="enable-background:new 0 0 22.354 22.354;" xml:space="preserve"><g><rect y="8.61" width="22.354" height="5.133"/></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g><g></g></svg>
-  </app-button>
+  <p class="ui-incrementer__label">{{textLabel}}</p>
+  <div (click)="desc()" class="ui-incrementer__block ui-incrementer__block--grey">
+    <svg width="15" height="14" viewBox="0 0 20 20" xml:space="preserve"><g><rect y="8" width="20" height="5"/></g></svg>
+  </div>
   <p class="ui-incrementer__value">
     {{ this.value }}
   </p>
-  <app-button (click)="inc()">
-    <svg height="448pt" viewBox="0 0 448 448" width="448pt" xmlns="http://www.w3.org/2000/svg"><path d="m272 184c-4.417969 0-8-3.582031-8-8v-176h-80v176c0 4.417969-3.582031 8-8 8h-176v80h176c4.417969 0 8 3.582031 8 8v176h80v-176c0-4.417969 3.582031-8 8-8h176v-80zm0 0"/></svg>
-  </app-button>
+  <div (click)="inc()" class="ui-incrementer__block ui-incrementer__block--black">
+    <svg viewBox="0 0 448 448" height="16" width="16"><path d="m272 184c-4.417969 0-8-3.582031-8-8v-176h-80v176c0 4.417969-3.582031 8-8 8h-176v80h176c4.417969 0 8 3.582031 8 8v176h80v-176c0-4.417969 3.582031-8 8-8h176v-80zm0 0"/></svg>
+  </div>
 </div>

@@ -1,6 +1,4 @@
 .ui-button
-  position: relative
-  bottom: 1px
   button
     display: flex
     font-family IBM Plex Sans
@@ -21,7 +19,7 @@
 
       &:active
         background #222321
-        svg
+        /deep/ svg
           fill: white
 
       &.disabled

@@ -7,6 +7,7 @@ import { Output } from '@angular/core';
   styleUrls: ['./incrementer.component.styl'],
 })
 export class IncrementerComponent {
+  @Input() textLabel = '';
   @Input() value = 0;
   @Input() step = 1;
   @Input() maxValue = 10;
