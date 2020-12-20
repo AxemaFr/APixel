@@ -1,10 +1,10 @@
-import {Component, Input, EventEmitter} from '@angular/core';
-import {Output} from '@angular/core';
+import { Component, Input, EventEmitter } from '@angular/core';
+import { Output } from '@angular/core';
 
 @Component({
   selector: 'app-incrementer',
   templateUrl: './incrementer.component.html',
-  styleUrls: ['./incrementer.component.styl']
+  styleUrls: ['./incrementer.component.styl'],
 })
 export class IncrementerComponent {
   @Input() value = 0;

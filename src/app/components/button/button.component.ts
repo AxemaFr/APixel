@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnInit} from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnInit } from '@angular/core';
 
 export enum ButtonThemes {
   primary = 'primary',
@@ -40,4 +40,3 @@ export class ButtonComponent {
     this.cdr.detectChanges();
   }
 }
-

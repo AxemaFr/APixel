@@ -1,5 +1,13 @@
-import {AfterContentInit, AfterViewInit, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, ViewChild} from '@angular/core';
-import {APixelator, APixelConfig, Color} from '../common/Apixelator';
+import {
+  AfterContentInit,
+  AfterViewInit,
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  ViewChild,
+} from '@angular/core';
+import { APixelator, APixelConfig, Color } from '../common/Apixelator';
 
 const minecraftPalette: Color[] = [
   [221, 221, 221], // white,
@@ -18,6 +26,17 @@ const minecraftPalette: Color[] = [
   [53, 70, 27], // darkgreen
   [150, 52, 48], // red
   [25, 22, 22], // black
+];
+
+const retrocalPalette: Color[] = [
+  [110, 184, 168],
+  [42, 88, 79],
+  [116, 163, 63],
+  [252, 255, 192],
+  [198, 80, 90],
+  [47, 20, 47],
+  [119, 68, 72],
+  [238, 156, 93],
 ];
 
 @Component({
@@ -54,7 +73,7 @@ export class AppComponent {
       if (!event || !event.target || !event.target.result) {
         return;
       }
-      img.src = (event.target.result as string);
+      img.src = event.target.result as string;
     };
     reader.readAsDataURL(e.target.files[0]);
   }
@@ -64,7 +83,7 @@ export class AppComponent {
       to: this.canvasTo?.nativeElement as HTMLCanvasElement,
       from: this.canvasFrom?.nativeElement as HTMLCanvasElement,
       resultPixelSize: this.resultPixelSize,
-      palette: this.minecraft ? minecraftPalette : [],
+      palette: this.minecraft ? retrocalPalette : [],
       scale: this.scale,
       isSpaced: this.isSpaced,
       isGrayScale: this.isGrayScale,

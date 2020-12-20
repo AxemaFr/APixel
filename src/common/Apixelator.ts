@@ -1,24 +1,22 @@
- /**
-  * APixel - convert an image to Pixel Art, with/out grayscale and based on a color palette with some improvment options
-  * @author Artem Myazitov @ <https://github.com/AxemaFr/APixel>
-  */
-
+/**
+ * APixel - convert an image to Pixel Art, with/out grayscale and based on a color palette with some improvment options
+ * @author Artem Myazitov @ <https://github.com/AxemaFr/APixel>
+ */
 
 export type APixelConfig = {
-  to: HTMLCanvasElement,
-  from: HTMLCanvasElement,
-  resultPixelSize: number
-  palette: Color[],
-  scale: number,
-  isSpaced: boolean,
-  isGrayScale: boolean,
+  to: HTMLCanvasElement;
+  from: HTMLCanvasElement;
+  resultPixelSize: number;
+  palette: Color[];
+  scale: number;
+  isSpaced: boolean;
+  isGrayScale: boolean;
 };
 
 export type Pixel = [number, number, number];
 export type Color = [number, number, number];
 
 export class APixelator {
-
   constructor(config: APixelConfig) {
     this.config = config;
     this.fromCtx = config.from.getContext('2d') as CanvasRenderingContext2D;
@@ -41,16 +39,11 @@ export class APixelator {
 
     const pixels = [];
     for (let sxl = 0; sxl < areaSize ** 2 * 4; sxl += 4) {
-      if (this.config.from.width - sx <= sxl + 2 || this.config.from.height - sy <= sxl + 2) {
+      if (this.config.from.width - sx <= sxl || this.config.from.height - sy <= sxl) {
         continue;
       }
 
-      const pixel: Pixel = [
-        pixelData.data[sxl],
-        pixelData.data[sxl + 1],
-        pixelData.data[sxl + 2],
-      ];
-
+      const pixel: Pixel = [pixelData.data[sxl], pixelData.data[sxl + 1], pixelData.data[sxl + 2]];
 
       pixels.push(pixel);
     }
@@ -147,7 +140,7 @@ export class APixelator {
       Math.round(sx * this.config.scale),
       Math.round(sy * this.config.scale),
       Math.ceil(this.config.resultPixelSize * this.config.scale),
-      Math.ceil(this.config.resultPixelSize * this.config.scale),
+      Math.ceil(this.config.resultPixelSize * this.config.scale)
     );
   }
 
