@@ -1,11 +1,14 @@
 .container
   font-family: Pixel
-  display block
-  position relative
-  padding-left 35px
-  margin-bottom 12px
+  display flex
+  position: relative
+  width: 250px
+  padding: 10px 12px
   cursor pointer
   font-size 22px
+  margin-bottom: 10px;
+  background: #FF9D0A;
+  border: 3px solid #000000;
   -webkit-user-select none
   -moz-user-select none
   -ms-user-select none
@@ -17,30 +20,19 @@
     height 0
     width 0
     &:checked
-      & ~ .checkmark
-        background-color #42B6FB
-        &:after
-          display block
-  .checkmark
-    &:after
-      left 9px
-      top 5px
-      width 5px
-      height 10px
-      border solid white
-      border-width 0 3px 3px 0
-      -webkit-transform rotate(45deg)
-      -ms-transform rotate(45deg)
-      transform rotate(45deg)
+      & ~ .checkmark .mark
+        display block
 
 .checkmark
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position absolute
-  top 0
-  left 0
+  margin-right: 10px;
+  right 0
   height 25px
   width 25px
   background-color #eee
-  &:after
-    content ""
-    position absolute
-    display none
+  .mark
+    display: none
+
