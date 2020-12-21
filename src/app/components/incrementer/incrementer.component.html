@@ -1,5 +1,12 @@
 <div class="ui-incrementer">
-  <app-button (click)="desc()">-</app-button>
-  {{ this.value }}
-  <app-button (click)="inc()">+</app-button>
+  <p class="ui-incrementer__label">{{label}}</p>
+  <div (click)="desc()" class="ui-incrementer__block ui-incrementer__block--grey">
+    <svg width="15" height="14" viewBox="0 0 20 20" xml:space="preserve"><g><rect y="8" width="20" height="5"/></g></svg>
+  </div>
+  <p class="ui-incrementer__value">
+    {{ this.value }}
+  </p>
+  <div (click)="inc()" class="ui-incrementer__block ui-incrementer__block--black">
+    <svg viewBox="0 0 448 448" height="16" width="16"><path d="m272 184c-4.417969 0-8-3.582031-8-8v-176h-80v176c0 4.417969-3.582031 8-8 8h-176v80h176c4.417969 0 8 3.582031 8 8v176h80v-176c0-4.417969 3.582031-8 8-8h176v-80zm0 0"/></svg>
+  </div>
 </div>
