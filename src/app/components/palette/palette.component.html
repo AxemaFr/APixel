@@ -1,7 +1,8 @@
 <div class="ui-palette">
   <div class="ui-palette__buttons">
-    <button (click)="prevPalette()"> < </button>
-    <button (click)="nextPalette()"> > </button>
+    <span>Palette</span>
+    <button class="ui-palette__prev" (click)="prevPalette()"> < </button>
+    <button class="ui-palette__next" (click)="nextPalette()"> > </button>
   </div>
   <div class="ui-palette__colors">
     <div *ngFor="let item of palette" class="ui-palette__color" style="background-color: rgb({{item}})"></div>
