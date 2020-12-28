@@ -3,6 +3,9 @@
   <app-button (click)="goTest()">Конвертировать</app-button>
   <app-checkbox [(value)]="isGrayScale" (valueChange)="goTest()">Grayscale</app-checkbox>
   <app-checkbox [(value)]="isSpaced" (valueChange)="goTest()">Spaced</app-checkbox>
+  <app-palette [(palette)]="currentPalette" (paletteChange)="goTest()"></app-palette>
+  <div style="display: flex; font-size: 18px; align-items: center; justify-content: space-between; width: 180px">
+    Scale
   <app-checkbox [(value)]="minecraft" (valueChange)="goTest()">minecraft on</app-checkbox>
   <div class="incrementer-block">
     <app-incrementer
