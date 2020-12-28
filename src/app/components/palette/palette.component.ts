@@ -53,4 +53,8 @@ export class PaletteComponent {
     this.palette = this.palettes[this.currentIndexPallet];
     this.paletteChange.emit(this.palette);
   }
+
+  public getRgbColorCss(item: number[]): string {
+    return `rgb(${item[0]}, ${item[1]}, ${item[2]}`;
+  }
 }

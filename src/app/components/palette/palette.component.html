@@ -4,7 +4,11 @@
     <button class="ui-palette__prev" (click)="prevPalette()"> < </button>
     <button class="ui-palette__next" (click)="nextPalette()"> > </button>
   </div>
-  <div class="ui-palette__colors">
-    <div *ngFor="let item of palette" class="ui-palette__color" style="background-color: rgb({{item}})"></div>
+  <div class="ui-palette__colors-container">
+    <div
+      *ngFor="let item of palette"
+      class="ui-palette__color"
+      [style.background-color]="getRgbColorCss(item)"
+    ></div>
   </div>
 </div>

@@ -1,18 +1,16 @@
 .ui-incrementer
   display: flex
   align-items: center
-  background: #FF9D0A
-  border: 3px solid #000000
-  height: 41px
-  padding: 0 15px
-  text-align: left
-  flex-wrap: 1;
+  background: rgba(0, 0, 0, 0.1);
+  border: 3px solid #EEEEEE
+  justify-content: space-between
+  padding: 14px 12px
   user-select none
+  color: #EEEEEE
 
   &__label
-    padding: 0
-    margin: 0 10px 0 0
-    font-size: 18px
+    font-size: 17px
+    margin-right: 12px
 
   &__block
     height: 20px
@@ -22,17 +20,13 @@
     align-items: center
     cursor: pointer
 
-    &--grey
-      background: #DFDFDF
-    &--black
-      background: #222321
-      /deep/ svg
-        fill: #DFDFDF
+    &--gray
+      background: #EEEEEE
 
   &__value
     padding: 0
     margin: 0
-    font-size: 18px
-    width: 55px
+    font-size: 17px
+    width: 35px
     display: flex
     justify-content center

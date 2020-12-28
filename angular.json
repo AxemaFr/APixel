@@ -96,7 +96,7 @@
             ],
             "styles": [
               "src/styles.styl",
-              "../node_modules/normalize.css/normalize.css"
+              "./node_modules/normalize.css/normalize.css"
             ],
             "scripts": []
           }
