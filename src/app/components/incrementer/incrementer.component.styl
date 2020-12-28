@@ -1,6 +1,38 @@
 .ui-incrementer
   display: flex
-  width: 120px
-  justify-content space-between
   align-items: center
-  font-size: 18px
+  background: #FF9D0A
+  border: 3px solid #000000
+  height: 41px
+  padding: 0 15px
+  text-align: left
+  flex-wrap: 1;
+  user-select none
+
+  &__label
+    padding: 0
+    margin: 0 10px 0 0
+    font-size: 18px
+
+  &__block
+    height: 20px
+    width: 20px
+    display: flex
+    justify-content: center
+    align-items: center
+    cursor: pointer
+
+    &--grey
+      background: #DFDFDF
+    &--black
+      background: #222321
+      /deep/ svg
+        fill: #DFDFDF
+
+  &__value
+    padding: 0
+    margin: 0
+    font-size: 18px
+    width: 55px
+    display: flex
+    justify-content center

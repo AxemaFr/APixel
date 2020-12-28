@@ -6,18 +6,21 @@
   <app-palette [(palette)]="currentPalette" (paletteChange)="goTest()"></app-palette>
   <div style="display: flex; font-size: 18px; align-items: center; justify-content: space-between; width: 180px">
     Scale
+  <app-checkbox [(value)]="minecraft" (valueChange)="goTest()">minecraft on</app-checkbox>
+  <div class="incrementer-block">
     <app-incrementer
       [(value)]="this.scale"
+      [label]='"Scale"'
       [step]="0.1"
       [maxValue]="1"
       [minValue]="0.1"
       (valueChange)="goTest()"
     ></app-incrementer>
   </div>
-  <div style="display: flex; font-size: 18px; align-items: center; justify-content: space-between; width: 180px">
-    resultPixel
+  <div class="incrementer-block">
     <app-incrementer
       [(value)]="this.resultPixelSize"
+      [label]='"resultPixel"'
       [step]="2"
       [maxValue]="40"
       [minValue]="4"
