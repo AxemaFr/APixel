@@ -6,10 +6,11 @@ import { ButtonModule } from './components/button/button.module';
 import { CheckboxModule } from './components/checkbox/checkbox.module';
 import { PaletteModule } from './components/palette/palette.module';
 import { IncrementerModule } from './components/incrementer/incrementer.module';
+import { UploaderComponent } from './components/uploader/uploader.component';
 
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, UploaderComponent],
   imports: [BrowserModule, ButtonModule, CheckboxModule, IncrementerModule, PaletteModule],
   providers: [],
   bootstrap: [AppComponent],

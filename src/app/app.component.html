@@ -5,13 +5,15 @@
   </header>
   <div class="playground">
     <div class="playground__controls">
-      <app-button>Upload</app-button>
+      <app-button (click)="download()">Upload</app-button>
       <app-checkbox>Grayscale</app-checkbox>
       <app-incrementer>Size</app-incrementer>
       <app-palette></app-palette>
+      <app-uploader (fileLoad)="onLoad($event)"></app-uploader>
     </div>
     <div class="playground__image">
-
+      <canvas #canvasElementFrom></canvas>
+      <canvas #canvasElementTo></canvas>
     </div>
 
   </div>

@@ -42,14 +42,18 @@ export class PaletteComponent {
 
   public nextPalette(): void {
     this.currentIndexPallet += 1;
-    if (this.currentIndexPallet >= this.palettes.length) { this.currentIndexPallet = 0; }
+    if (this.currentIndexPallet >= this.palettes.length) {
+      this.currentIndexPallet = 0;
+    }
     this.palette = this.palettes[this.currentIndexPallet];
     this.paletteChange.emit(this.palette);
   }
 
   public prevPalette(): void {
     this.currentIndexPallet -= 1;
-    if (this.currentIndexPallet < 0) { this.currentIndexPallet = this.palettes.length - 1; }
+    if (this.currentIndexPallet < 0) {
+      this.currentIndexPallet = this.palettes.length - 1;
+    }
     this.palette = this.palettes[this.currentIndexPallet];
     this.paletteChange.emit(this.palette);
   }
