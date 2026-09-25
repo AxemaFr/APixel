@@ -1,0 +1,120 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
+.app {
+  box-sizing: border-box;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 clamp(16px, 5vw, 64px);
+  background-color: rgba(0, 0, 0, 0.5);
+  color: var(--fg);
+
+  &__header {
+    text-align: center;
+
+    h1 {
+      margin: 32px 0 8px;
+      font-size: clamp(28px, 5vw, 44px);
+      font-weight: normal;
+    }
+
+    p {
+      margin-bottom: 32px;
+      font-size: 18px;
+    }
+  }
+
+  &__footer {
+    margin-top: auto;
+    padding: 32px 0 24px;
+    text-align: center;
+    font-size: 15px;
+  }
+}
+
+.playground {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  align-items: start;
+  gap: 24px;
+
+  @media (max-width: 800px) {
+    grid-template-columns: 1fr;
+  }
+
+  &__controls {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  &__stage {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    min-height: 300px;
+    outline: 3px dashed transparent;
+    outline-offset: 6px;
+
+    &--dragging {
+      outline-color: var(--accent);
+    }
+  }
+
+  &__error {
+    grid-column: 1 / -1;
+    border-color: var(--danger);
+    color: var(--danger);
+  }
+
+  &__panel {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin: 0;
+
+    figcaption {
+      display: flex;
+      justify-content: space-between;
+      align-self: stretch;
+      font-size: 17px;
+    }
+  }
+
+  &__size {
+    opacity: 0.7;
+  }
+
+  &__canvas {
+    display: block;
+    max-width: 100%;
+    max-height: 70vh;
+    width: auto;
+    height: auto;
+    // Checkerboard, so that transparent parts of the image are visible.
+    background: repeating-conic-gradient(#bbb 0% 25%, #eee 0% 50%) 50% / 16px 16px;
+
+    &--pixelated {
+      image-rendering: pixelated;
+    }
+  }
+
+  &__empty {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 300px;
+    border-style: dashed;
+    font-size: 20px;
+    text-align: center;
+  }
+}

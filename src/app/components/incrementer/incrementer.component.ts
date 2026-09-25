@@ -1,33 +1,35 @@
-import { Component, Input, EventEmitter } from '@angular/core';
-import { Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input, model } from '@angular/core';
 
 @Component({
   selector: 'app-incrementer',
   templateUrl: './incrementer.component.html',
-  styleUrls: ['./incrementer.component.styl'],
+  styleUrl: './incrementer.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class IncrementerComponent {
-  @Input() value = 0;
-  @Input() step = 1;
-  @Input() maxValue = 10;
-  @Input() minValue = -5;
-  @Output() valueChange = new EventEmitter();
+  readonly value = model(0);
+  readonly step = input(1);
+  readonly min = input(0);
+  readonly max = input(10);
+  /** Accessible name for the +/- buttons, e.g. "pixel size". */
+  readonly label = input('value');
 
-  inc(): void {
-    const newValue = Math.round((this.value + this.step) * 10) / 10;
-    if (newValue > this.maxValue) {
-      return;
-    }
+  protected readonly canDecrease = computed(() => this.value() > this.min());
+  protected readonly canIncrease = computed(() => this.value() < this.max());
 
-    this.valueChange.emit(Math.round((this.value + this.step) * 10) / 10);
+  increase(): void {
+    this.update(this.value() + this.step());
   }
 
-  desc(): void {
-    const newValue = Math.round((this.value - this.step) * 10) / 10;
-    if (newValue < this.minValue) {
-      return;
-    }
+  decrease(): void {
+    this.update(this.value() - this.step());
+  }
 
-    this.valueChange.emit(Math.round((this.value - this.step) * 10) / 10);
+  private update(next: number): void {
+    // Round away float noise (0.1 + 0.2) to the precision of the step, then clamp,
+    // so the bounds are always reachable even when they aren't a multiple of the step.
+    const decimals = (String(this.step()).split('.')[1] ?? '').length;
+    const rounded = Number(next.toFixed(decimals));
+    this.value.set(Math.min(this.max(), Math.max(this.min(), rounded)));
   }
 }

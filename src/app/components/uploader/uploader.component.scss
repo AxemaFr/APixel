@@ -1,0 +1,24 @@
+:host {
+  display: block;
+}
+
+.ui-uploader {
+  display: block;
+  font-size: 18px;
+  text-align: center;
+  cursor: pointer;
+  user-select: none;
+
+  &:hover {
+    background-color: var(--surface-hover);
+  }
+
+  &:active {
+    transform: translate(2px, 2px);
+  }
+
+  &:has(input:focus-visible) {
+    outline: 3px solid var(--accent);
+    outline-offset: 2px;
+  }
+}

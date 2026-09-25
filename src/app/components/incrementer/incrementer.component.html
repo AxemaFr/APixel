@@ -1,12 +1,26 @@
-<div class="ui-incrementer">
-  <p class="ui-incrementer__label"><ng-content></ng-content></p>
-  <div (click)="desc()" class="ui-incrementer__block ui-incrementer__block--gray">
-    <svg width="16" height="16" viewBox="0 0 20 20" xml:space="preserve"><g><rect y="8" width="20" height="5"/></g></svg>
-  </div>
-  <p class="ui-incrementer__value">
-    {{ this.value }}
-  </p>
-  <div (click)="inc()" class="ui-incrementer__block ui-incrementer__block--gray">
-    <svg viewBox="0 0 448 448" height="16" width="16"><path d="m272 184c-4.417969 0-8-3.582031-8-8v-176h-80v176c0 4.417969-3.582031 8-8 8h-176v80h176c4.417969 0 8 3.582031 8 8v176h80v-176c0-4.417969 3.582031-8 8-8h176v-80zm0 0"/></svg>
-  </div>
+<div class="pixel-box ui-incrementer">
+  <span class="ui-incrementer__label"><ng-content /></span>
+  <button
+    type="button"
+    class="ui-incrementer__button"
+    [disabled]="!canDecrease()"
+    [attr.aria-label]="'Decrease ' + label()"
+    (click)="decrease()"
+  >
+    <svg width="16" height="16" viewBox="0 0 20 20" aria-hidden="true"><rect y="8" width="20" height="5" /></svg>
+  </button>
+  <output class="ui-incrementer__value" aria-live="polite">{{ value() }}</output>
+  <button
+    type="button"
+    class="ui-incrementer__button"
+    [disabled]="!canIncrease()"
+    [attr.aria-label]="'Increase ' + label()"
+    (click)="increase()"
+  >
+    <svg width="16" height="16" viewBox="0 0 448 448" aria-hidden="true">
+      <path
+        d="M272 184a8 8 0 0 1-8-8V0h-80v176a8 8 0 0 1-8 8H0v80h176a8 8 0 0 1 8 8v176h80V272a8 8 0 0 1 8-8h176v-80z"
+      />
+    </svg>
+  </button>
 </div>

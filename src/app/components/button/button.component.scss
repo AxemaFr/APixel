@@ -1,0 +1,24 @@
+:host {
+  display: block;
+}
+
+.ui-button {
+  width: 100%;
+  font: inherit;
+  font-size: 18px;
+  cursor: pointer;
+  user-select: none;
+
+  &:hover:not(:disabled) {
+    background-color: var(--surface-hover);
+  }
+
+  &:active:not(:disabled) {
+    transform: translate(2px, 2px);
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+}

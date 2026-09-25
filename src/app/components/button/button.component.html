@@ -1,9 +1,3 @@
-<div class="ui-button">
-  <button
-    [ngClass]="theme"
-    [class.disabled]="disabled"
-    (click)="emitClick($event)"
-  >
-    <ng-content></ng-content>
-  </button>
-</div>
+<button type="button" class="pixel-box ui-button" [disabled]="disabled()" (click)="pressed.emit()">
+  <ng-content />
+</button>
