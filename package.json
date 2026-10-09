@@ -1,47 +1,45 @@
 {
-  "name": "axema-pixel",
-  "version": "0.0.0",
+  "name": "apixel",
+  "version": "1.0.0",
+  "description": "Turn any image into pixel art right in the browser",
+  "author": "Artem Myazitov (https://github.com/AxemaFr)",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/AxemaFr/APixel.git"
+  },
+  "private": true,
+  "engines": {
+    "node": "^20.19.0 || ^22.12.0 || >=24.0.0"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
+    "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
-  "private": true,
   "dependencies": {
-    "@angular/animations": "~11.0.4",
-    "@angular/common": "~11.0.4",
-    "@angular/compiler": "~11.0.4",
-    "@angular/core": "~11.0.4",
-    "@angular/forms": "~11.0.4",
-    "@angular/platform-browser": "~11.0.4",
-    "@angular/platform-browser-dynamic": "~11.0.4",
-    "@angular/router": "~11.0.4",
-    "normalize.css": "8.0.1",
-    "prettier": "^2.2.1",
-    "rxjs": "~6.6.0",
-    "tslib": "^2.0.0",
-    "zone.js": "~0.10.2"
+    "@angular/common": "^21.2.0",
+    "@angular/compiler": "^21.2.0",
+    "@angular/core": "^21.2.0",
+    "@angular/platform-browser": "^21.2.0",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~0.1100.4",
-    "@angular/cli": "~11.0.4",
-    "@angular/compiler-cli": "~11.0.4",
-    "@types/jasmine": "~3.6.0",
-    "@types/node": "^12.11.1",
-    "codelyzer": "^6.0.0",
-    "jasmine-core": "~3.6.0",
-    "jasmine-spec-reporter": "~5.0.0",
-    "karma": "~5.1.0",
-    "karma-chrome-launcher": "~3.1.0",
-    "karma-coverage": "~2.0.3",
-    "karma-jasmine": "~4.0.0",
-    "karma-jasmine-html-reporter": "^1.5.0",
-    "protractor": "~7.0.0",
-    "ts-node": "~8.3.0",
-    "tslint": "~6.1.0",
-    "typescript": "~4.0.2"
+    "@angular/build": "^21.2.24",
+    "@angular/cli": "^21.2.24",
+    "@angular/compiler-cli": "^21.2.0",
+    "@eslint/js": "^9.39.5",
+    "angular-eslint": "^21.4.0",
+    "eslint": "^9.39.5",
+    "jsdom": "^28.0.0",
+    "prettier": "^3.8.1",
+    "typescript": "~5.9.2",
+    "typescript-eslint": "^8.70.1",
+    "vitest": "^4.0.8"
   }
 }

@@ -1,42 +1,13 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnInit } from '@angular/core';
-
-export enum ButtonThemes {
-  primary = 'primary',
-  secondary = 'secondary',
-  alert = 'alert',
-}
-
-export enum ButtonSize {
-  sm = 'sm',
-  lg = 'lg',
-}
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 
 @Component({
   selector: 'app-button',
   templateUrl: './button.component.html',
-  styleUrls: ['./button.component.styl'],
+  styleUrl: './button.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ButtonComponent {
-  @Input() theme = ButtonThemes.primary;
-  @Input() disabled = false;
-  @Input() buttonSize: ButtonSize = ButtonSize.lg;
-  @Input() index = 0;
-
-  constructor(private cdr: ChangeDetectorRef) {}
-
-  public readonly click: EventEmitter<void> = new EventEmitter();
-
-  public emitClick(event: Event): void {
-    if (this.disabled) {
-      return;
-    }
-
-    this.click.emit();
-  }
-
-  public setTheme(theme: ButtonThemes): void {
-    this.theme = theme;
-    this.cdr.detectChanges();
-  }
+  readonly disabled = input(false);
+  /** Emitted on click, but never while the button is disabled. */
+  readonly pressed = output<void>();
 }

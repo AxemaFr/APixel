@@ -1,0 +1,41 @@
+:host {
+  display: block;
+}
+
+.ui-incrementer {
+  display: flex;
+  align-items: center;
+  font-size: 17px;
+  user-select: none;
+
+  &__label {
+    flex: 1;
+    margin-right: 12px;
+  }
+
+  &__button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 25px;
+    height: 25px;
+    padding: 0;
+    border: none;
+    background: var(--fg);
+    cursor: pointer;
+
+    &:disabled {
+      cursor: not-allowed;
+      opacity: 0.4;
+    }
+
+    &:active:not(:disabled) {
+      transform: translate(1px, 1px);
+    }
+  }
+
+  &__value {
+    width: 45px;
+    text-align: center;
+  }
+}

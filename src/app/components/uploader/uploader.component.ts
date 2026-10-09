@@ -1,28 +1,22 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import { ChangeDetectionStrategy, Component, output } from '@angular/core';
 
 @Component({
   selector: 'app-uploader',
   templateUrl: './uploader.component.html',
-  styleUrls: ['./uploader.component.styl']
+  styleUrl: './uploader.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UploaderComponent {
-  @Output() fileLoad = new EventEmitter<HTMLImageElement>();
+  readonly fileSelect = output<File>();
 
-  public emitFile(e): void {
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const img = new Image();
-      img.onload = () => {
-        this.fileLoad.emit(img);
-      };
+  protected onChange(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    // Reset, so that picking the same file again still triggers `change`.
+    input.value = '';
 
-      if (!event || !event.target || !event.target.result) {
-        return;
-      }
-
-      img.src = event.target.result as string;
-    };
-
-    reader.readAsDataURL(e.target.files[0]);
+    if (file) {
+      this.fileSelect.emit(file);
+    }
   }
 }

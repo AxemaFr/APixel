@@ -1,0 +1,40 @@
+:host {
+  display: block;
+}
+
+.ui-checkbox {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 17px;
+  cursor: pointer;
+  user-select: none;
+
+  &:hover {
+    background-color: var(--surface-hover);
+  }
+
+  &:has(input:focus-visible) {
+    outline: 3px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  &__box {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: 25px;
+    height: 25px;
+    margin-left: 12px;
+    background-color: var(--fg);
+  }
+
+  &__mark {
+    display: none;
+  }
+}
+
+input:checked + .ui-checkbox__box .ui-checkbox__mark {
+  display: block;
+}

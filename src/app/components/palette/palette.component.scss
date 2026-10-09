@@ -1,0 +1,54 @@
+:host {
+  display: block;
+}
+
+.ui-palette {
+  user-select: none;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+
+  &__name {
+    font-size: 18px;
+  }
+
+  &__arrow {
+    width: 25px;
+    height: 25px;
+    padding: 0;
+    border: none;
+    background: var(--fg);
+    color: var(--bg);
+    font: inherit;
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+
+    &:active {
+      transform: translate(1px, 1px);
+    }
+  }
+
+  &__colors {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    min-height: 20px;
+  }
+
+  &__color {
+    width: 20px;
+    height: 20px;
+    border: 1px solid #dfdfdf;
+    box-sizing: border-box;
+  }
+
+  &__hint {
+    font-size: 14px;
+    opacity: 0.8;
+  }
+}

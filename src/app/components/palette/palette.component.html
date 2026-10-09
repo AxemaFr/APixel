@@ -1,14 +1,14 @@
-<div class="ui-palette">
-  <div class="ui-palette__buttons">
-    <span>Palette</span>
-    <button class="ui-palette__prev" (click)="prevPalette()"> < </button>
-    <button class="ui-palette__next" (click)="nextPalette()"> > </button>
+<div class="pixel-box ui-palette" role="group" aria-label="Color palette">
+  <div class="ui-palette__header">
+    <button type="button" class="ui-palette__arrow" aria-label="Previous palette" (click)="prev()">&lt;</button>
+    <span class="ui-palette__name" aria-live="polite">{{ current().name }}</span>
+    <button type="button" class="ui-palette__arrow" aria-label="Next palette" (click)="next()">&gt;</button>
   </div>
-  <div class="ui-palette__colors-container">
-    <div
-      *ngFor="let item of palette"
-      class="ui-palette__color"
-      [style.background-color]="getRgbColorCss(item)"
-    ></div>
+  <div class="ui-palette__colors">
+    @for (color of current().colors; track $index) {
+      <span class="ui-palette__color" [style.background-color]="toCssColor(color)"></span>
+    } @empty {
+      <span class="ui-palette__hint">Keeps the image colors</span>
+    }
   </div>
 </div>

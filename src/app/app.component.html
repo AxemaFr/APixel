@@ -1,21 +1,56 @@
-<main>
-  <header>
-    <h1>AxemaFr's APixel playground</h1>
-    <h2>Upload an image and have fun!</h2>
+<main class="app">
+  <header class="app__header">
+    <h1>APixel playground</h1>
+    <p>Turn any image into pixel art. Everything happens right in your browser.</p>
   </header>
+
   <div class="playground">
-    <div class="playground__controls">
-      <app-button (click)="download()">Upload</app-button>
-      <app-checkbox>Grayscale</app-checkbox>
-      <app-incrementer>Size</app-incrementer>
-      <app-palette></app-palette>
-      <app-uploader (fileLoad)="onLoad($event)"></app-uploader>
-    </div>
-    <div class="playground__image">
-      <canvas #canvasElementFrom></canvas>
-      <canvas #canvasElementTo></canvas>
-    </div>
+    <aside class="playground__controls">
+      <app-uploader (fileSelect)="loadFile($event)">Upload image</app-uploader>
+      <app-button [disabled]="!source()" (pressed)="download()">Download PNG</app-button>
+      <app-incrementer [(value)]="pixelSize" [min]="2" [max]="64" label="pixel size">Pixel size</app-incrementer>
+      <app-incrementer [(value)]="scale" [step]="0.1" [min]="0.1" [max]="2" label="scale">Scale</app-incrementer>
+      <app-checkbox [(value)]="grayscale">Grayscale</app-checkbox>
+      <app-checkbox [(value)]="grid">Grid</app-checkbox>
+      <app-palette [palettes]="palettes" [(index)]="paletteIndex" />
+    </aside>
 
+    <section
+      class="playground__stage"
+      [class.playground__stage--dragging]="dragging()"
+      (dragover)="onDragOver($event)"
+      (dragleave)="onDragLeave($event)"
+      (drop)="onDrop($event)"
+    >
+      @if (error(); as message) {
+        <p class="pixel-box playground__error" role="alert">{{ message }}</p>
+      }
+
+      @if (source()) {
+        <figure class="pixel-box playground__panel">
+          <figcaption>Original</figcaption>
+          <canvas #original class="playground__canvas"></canvas>
+        </figure>
+        <figure class="pixel-box playground__panel">
+          <figcaption>
+            Pixel art <span class="playground__size">{{ resultSize() }}</span>
+          </figcaption>
+          <canvas #result class="playground__canvas playground__canvas--pixelated"></canvas>
+        </figure>
+      } @else {
+        <div class="pixel-box playground__empty">
+          @if (loading()) {
+            Loading...
+          } @else {
+            Drop an image here, paste it from the clipboard or press "Upload image"
+          }
+        </div>
+      }
+    </section>
   </div>
-</main>
 
+  <footer class="app__footer">
+    Made by <a href="https://github.com/AxemaFr">AxemaFr</a> |
+    <a href="https://github.com/AxemaFr/APixel">Source on GitHub</a>
+  </footer>
+</main>

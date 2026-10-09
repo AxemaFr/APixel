@@ -1,22 +1,15 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { ChangeDetectionStrategy, Component, model } from '@angular/core';
 
 @Component({
   selector: 'app-checkbox',
   templateUrl: './checkbox.component.html',
-  styleUrls: ['./checkbox.component.styl'],
+  styleUrl: './checkbox.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CheckboxComponent {
-  @Input() value = false;
-  @Output() valueChange = new EventEmitter<boolean>();
+  readonly value = model(false);
 
-  @Output() testEvent = new EventEmitter<string>();
-
-  public onCheckboxChange(event: Event): void {
-    this.testEvent.emit('Hello');
-    if (!event.target) {
-      return;
-    }
-    // @ts-ignore
-    this.valueChange.emit(event.target.checked);
+  protected onChange(event: Event): void {
+    this.value.set((event.target as HTMLInputElement).checked);
   }
 }
